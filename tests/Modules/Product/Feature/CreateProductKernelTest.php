@@ -8,9 +8,9 @@ use App\Modules\Product\Core\Domain\Product;
 use App\Modules\Product\Core\Domain\ProductRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Ramsey\Uuid\Uuid;
-use Tests\TestCase;
+use Tests\KernelTestCase;
 
-class CreateProductTest extends TestCase
+class CreateProductKernelTest extends KernelTestCase
 {
     use RefreshDatabase;
 
