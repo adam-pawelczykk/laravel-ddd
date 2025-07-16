@@ -4,7 +4,8 @@
 
 namespace App\System\MessageBus;
 
-use App\System\MessageBus\Policy\RequireExactlyOneHandlerPolicy;
+use App\System\MessageBus\Bus\QueryBus;
+use App\System\MessageBus\Specification\RequireExactlyOneHandlerSpec;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Event;
@@ -38,8 +39,8 @@ readonly class HandlerRegisterer
 
     private function registerCommand(string $messageClass, array $handlers): void
     {
-        $policy = new RequireExactlyOneHandlerPolicy();
-        $policy->assert($messageClass, $handlers);
+        $spec = new RequireExactlyOneHandlerSpec();
+        $spec->assert($messageClass, $handlers);
 
         $this->container->bind($messageClass, $handlers[0]);
 
@@ -48,8 +49,8 @@ readonly class HandlerRegisterer
 
     private function registerQuery(string $messageClass, array $handlers): void
     {
-        $policy = new RequireExactlyOneHandlerPolicy();
-        $policy->assert($messageClass, $handlers);
+        $spec = new RequireExactlyOneHandlerSpec();
+        $spec->assert($messageClass, $handlers);
 
         $queryBus = $this->container->make(QueryBus::class);
         $queryBus->register($messageClass, $handlers[0]);

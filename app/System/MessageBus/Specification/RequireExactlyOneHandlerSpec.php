@@ -2,11 +2,11 @@
 
 /** @author: Adam Pawełczyk */
 
-namespace App\System\MessageBus\Policy;
+namespace App\System\MessageBus\Specification;
 
 use LogicException;
 
-class RequireExactlyOneHandlerPolicy
+class RequireExactlyOneHandlerSpec
 {
     public function isSatisfiedBy(array $handlers): bool
     {
