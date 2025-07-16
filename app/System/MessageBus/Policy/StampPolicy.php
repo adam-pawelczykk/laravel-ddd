@@ -1,4 +1,5 @@
 <?php
+
 /** @author: Adam Pawełczyk */
 
 namespace App\System\MessageBus\Policy;

@@ -1,4 +1,5 @@
 <?php
+
 /** @author: Adam Pawełczyk */
 
 namespace App\System\MessageBus\Bus;
@@ -27,7 +28,7 @@ readonly class EventBus implements EventBusInterface
     {
         $this->stampPolicy->apply($message, $stamps);
         $this->transactions->addCallback(
-            fn() => $this->dispatcher->dispatch($message)
+            fn () => $this->dispatcher->dispatch($message)
         );
     }
 }
