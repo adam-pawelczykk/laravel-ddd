@@ -8,11 +8,16 @@ use App\Modules\Product\Core\Application\Command\CreateProduct;
 use App\Modules\Product\Core\Application\Event\ProductWasCreated;
 use App\Modules\Product\Core\Domain\Product;
 use App\Modules\Product\Core\Domain\ProductRepository;
+use App\Modules\Shared\Bus\EventBus;
+use App\System\MessageBus\Stamp\UserStamp;
+use Ramsey\Uuid\Uuid;
 
 readonly class CreateProductHandler
 {
-    public function __construct(private ProductRepository $productRepository)
-    {
+    public function __construct(
+        private ProductRepository $productRepository,
+        private EventBus          $eventBus
+    ) {
     }
 
     public function __invoke(CreateProduct $command): void
@@ -28,6 +33,11 @@ readonly class CreateProductHandler
         $this->productRepository->add($product);
 
         // Dispatch an event after product creation
-        event(new ProductWasCreated($product->getUuid()));
+        $this->eventBus->dispatch(
+            new ProductWasCreated($product->getUuid()),
+            [
+                new UserStamp(Uuid::uuid4())
+            ]
+        );
     }
 }

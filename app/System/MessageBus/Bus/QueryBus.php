@@ -2,10 +2,10 @@
 
 /** @author: Adam Pawełczyk */
 
-namespace App\System\MessageBus;
+namespace App\System\MessageBus\Bus;
 
+use App\Modules\Shared\Bus\QueryBus as QueryBusInterface;
 use Illuminate\Contracts\Container\Container;
-use App\Modules\Shared\QueryBus as QueryBusInterface;
 use LogicException;
 
 class QueryBus implements QueryBusInterface

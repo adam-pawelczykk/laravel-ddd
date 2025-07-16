@@ -5,11 +5,15 @@
 namespace App\Modules\Product\Core\Application\Command;
 
 use App\Modules\Product\Core\Application\DTO\NewProductDTO;
+use App\Modules\Shared\Bus\StampedMessage;
+use App\Modules\Shared\Traits\HasStamps;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
-class CreateProduct
+class CreateProduct implements StampedMessage
 {
+    use HasStamps;
+
     private UuidInterface $uuid;
 
     public function __construct(

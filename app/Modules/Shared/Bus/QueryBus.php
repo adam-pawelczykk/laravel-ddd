@@ -2,7 +2,7 @@
 
 /** @author: Adam Pawełczyk */
 
-namespace App\Modules\Shared;
+namespace App\Modules\Shared\Bus;
 
 interface QueryBus
 {

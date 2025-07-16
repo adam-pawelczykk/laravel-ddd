@@ -4,11 +4,15 @@
 
 namespace App\Modules\Product\Core\Application\Event;
 
+use App\Modules\Shared\Bus\StampedMessage;
+use App\Modules\Shared\Traits\HasStamps;
 use Ramsey\Uuid\UuidInterface;
 
-readonly class ProductWasCreated
+class ProductWasCreated implements StampedMessage
 {
-    public function __construct(private UuidInterface $productUuid)
+    use HasStamps;
+
+    public function __construct(private readonly UuidInterface $productUuid)
     {
     }
 
