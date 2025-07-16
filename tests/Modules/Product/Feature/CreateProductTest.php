@@ -37,6 +37,23 @@ class CreateProductTest extends TestCase
         ]);
     }
 
+    public function testShouldReturnValidationErrorWhenPayloadIsIncomplete(): void
+    {
+        // Given
+        $payload = [
+            'description' => 'Some description',
+            'price' => 99.99,
+            'tags' => ['tag1', 'tag2'],
+        ];
+
+        // When
+        $response = $this->postJson('/products', $payload);
+
+        // Then
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors(['name']);
+    }
+
     public function testShouldSuccessReturnProduct(): void
     {
         // Given

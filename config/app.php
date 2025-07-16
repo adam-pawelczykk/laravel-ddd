@@ -9,7 +9,9 @@ use Illuminate\Filesystem\FilesystemServiceProvider;
 use Illuminate\Foundation\Providers\ConsoleSupportServiceProvider;
 use Illuminate\Foundation\Providers\FoundationServiceProvider;
 use Illuminate\Queue\QueueServiceProvider;
+use Illuminate\Validation\ValidationServiceProvider;
 use Illuminate\View\ViewServiceProvider;
+use Illuminate\Translation\TranslationServiceProvider;
 
 return [
 
@@ -134,6 +136,10 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'aliases' => [
+        //'validator' => Illuminate\Support\Facades\Validator::class
+    ],
+
     'providers' => [
         ConsoleSupportServiceProvider::class,
         CacheServiceProvider::class,
@@ -143,6 +149,8 @@ return [
         BusServiceProvider::class,
         QueueServiceProvider::class,
         ViewServiceProvider::class,
+        ValidationServiceProvider::class,
+        TranslationServiceProvider::class,
 
         AppServiceProvider::class,
         MessageBusServiceProvider::class,

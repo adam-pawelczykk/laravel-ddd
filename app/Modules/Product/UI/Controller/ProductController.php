@@ -7,11 +7,11 @@ namespace App\Modules\Product\UI\Controller;
 use App\Modules\Product\Core\Application\Command\CreateProduct;
 use App\Modules\Product\Core\Application\DTO\NewProductDTO;
 use App\Modules\Product\Core\Application\Query\GetProduct;
-use App\Modules\Shared\QueryBus;
+use App\Modules\Shared\Bus\CommandBus;
+use App\Modules\Shared\Bus\QueryBus;
+use App\System\MessageBus\Stamp\UserStamp;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Bus;
 use Ramsey\Uuid\Uuid;
 use Spatie\RouteAttributes\Attributes\Get;
 use Spatie\RouteAttributes\Attributes\Post;
@@ -19,14 +19,12 @@ use Spatie\RouteAttributes\Attributes\Post;
 class ProductController extends Controller
 {
     #[Post('products')]
-    public function store(Request $request): JsonResponse
+    public function store(NewProductDTO $dto, CommandBus $commandBus): JsonResponse
     {
-        $dto = NewProductDTO::from($request->all());
-
         $command = new CreateProduct($dto);
-
-
-        Bus::dispatch($command);
+        $commandBus->dispatch($command, [
+            new UserStamp(Uuid::uuid4())
+        ]);
 
         return response()->json([
             'uuid' => $command->getUuid()
